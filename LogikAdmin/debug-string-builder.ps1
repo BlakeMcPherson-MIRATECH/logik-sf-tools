@@ -19,3 +19,4 @@ $json | Set-Clipboard
 
 Write-Output "JSON also copied to clipboard:"
 Write-Output $json
+
