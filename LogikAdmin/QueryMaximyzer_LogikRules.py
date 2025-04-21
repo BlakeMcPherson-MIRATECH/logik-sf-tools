@@ -17,18 +17,33 @@ parser.add_argument('--search', type=str, help='Substring to search for in varia
 args = parser.parse_args()
 search_string = args.search
 
-# Config
-tenant = 'miratech'
-sector = "test"
+envs = {
+    "DEV": {
+        "tenant": "miratech-sandbox02",
+        "sector": "test"
+    },
+    "UAT": {
+        "tenant": "miratech",
+        "sector": "test02"
+    },
+    "PROD": {
+        "tenant": "miratech",
+        "sector": "prod01"
+    }
+}
+
+env = envs["DEV"]
+
+tenant = env["tenant"]
+sector = env["sector"]
 blueprint_name = "productConfigurator40"
 api_key = os.getenv("LOGIK_DEV_IO_API_KEY")
 
 if not api_key:
     raise ValueError("API key not found. Please check your environment variables.")
 
-def build_url(sector, endpoint):
-    base_url = f"https://{tenant}.{sector}.logik.io"
-    return f"{base_url}{endpoint}"
+def build_url(tenant, sector, endpoint):
+    return f"https://{tenant}.{sector}.logik.io{endpoint}"
 
 def make_api_request(url, api_key):
     headers = {
