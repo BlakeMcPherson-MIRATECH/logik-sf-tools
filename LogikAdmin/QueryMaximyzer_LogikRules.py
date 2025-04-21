@@ -70,7 +70,7 @@ page_size = 100
 
 while True:
     endpoint = f"/api/admin/v2/blueprints/{blueprint_name}/rules?page={page}&size={page_size}&sort=modified%2CDESC"
-    url = build_url(sector, endpoint)
+    url = build_url(tenant, sector, endpoint)
     rules_list = make_api_request(url, api_key)
     if rules_list and "content" in rules_list and rules_list["content"]:
         all_rules.extend(rules_list["content"])
